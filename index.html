@@ -1,768 +1,342 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Spark</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap">
-<style>
-/* ── Tokens ── */
-:root {
-  --bg:       #06041A;
-  --surface:  #10092E;
-  --surface2: #1C1240;
-  --surface3: #241850;
-  --pink:     #E8409A;
-  --purple:   #7C3AED;
-  --fuchsia:  #C026D3;
-  --text:     #F0EEFF;
-  --dim:      #9A93AE;
-  --muted:    #4E4868;
-  --border:   rgba(232,64,154,0.16);
-  --glow:     rgba(232,64,154,0.18);
-  --pglow:    rgba(124,58,237,0.18);
-}
-
-*, *::before, *::after { box-sizing: border-box; margin: 0; }
-
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: 1rem;
-  line-height: 1.6;
-  overflow-x: hidden;
-}
-
-/* ── Nav ── */
-nav {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: rgba(6,4,26,0.88);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border);
-  padding: 0 24px;
-}
-.nav-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  max-width: 1040px;
-  margin-inline: auto;
-  height: 60px;
-}
-.nav-logo {
-  font-family: 'Syne', sans-serif;
-  font-weight: 800;
-  font-size: 1.25rem;
-  color: var(--text);
-  text-decoration: none;
-  display: flex; align-items: center; gap: 8px;
-  letter-spacing: -0.02em;
-}
-.logo-spark { color: var(--pink); }
-.nav-links {
-  display: flex; gap: 28px; list-style: none;
-  font-size: 0.88rem; font-weight: 500; color: var(--dim);
-}
-.nav-links a { color: inherit; text-decoration: none; }
-.nav-links a:hover { color: var(--text); }
-.nav-cta {
-  background: var(--pink);
-  color: #fff;
-  border: none; border-radius: 100px;
-  padding: 8px 20px;
-  font-family: 'DM Sans', sans-serif;
-  font-weight: 600; font-size: 0.88rem;
-  cursor: pointer; text-decoration: none;
-}
-
-/* ── Layout ── */
-.wrap { max-width: 1040px; margin-inline: auto; padding-inline: 24px; }
-
-/* ── Hero ── */
-.hero {
-  padding: 100px 24px 80px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-.hero-glow {
-  position: absolute;
-  top: -80px; left: 50%;
-  transform: translateX(-50%);
-  width: 700px; height: 400px;
-  background: radial-gradient(ellipse at 50% 30%, rgba(232,64,154,0.22), rgba(124,58,237,0.14) 50%, transparent 75%);
-  pointer-events: none;
-}
-.badge {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: rgba(232,64,154,0.1);
-  border: 1px solid rgba(232,64,154,0.3);
-  border-radius: 100px;
-  padding: 6px 16px;
-  font-size: 0.78rem; font-weight: 700;
-  letter-spacing: 0.08em; text-transform: uppercase;
-  color: var(--pink); margin-bottom: 28px;
-}
-.hero h1 {
-  font-family: 'Syne', sans-serif;
-  font-weight: 800;
-  font-size: clamp(3rem, 8vw, 5.2rem);
-  line-height: 1.02;
-  letter-spacing: -0.04em;
-  text-wrap: balance;
-  margin-bottom: 20px;
-}
-.grad {
-  background: linear-gradient(135deg, var(--pink) 0%, var(--fuchsia) 50%, var(--purple) 100%);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.hero p {
-  font-size: 1.15rem; color: var(--dim);
-  max-width: 500px; margin-inline: auto; margin-bottom: 36px;
-  text-wrap: balance;
-}
-.hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-.btn-p {
-  background: linear-gradient(135deg, var(--pink), var(--fuchsia));
-  color: #fff; border: none; border-radius: 100px;
-  padding: 14px 32px;
-  font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 1rem;
-  text-decoration: none; cursor: pointer;
-  transition: opacity 0.15s, transform 0.15s;
-}
-.btn-p:hover { opacity: 0.88; transform: translateY(-2px); }
-.btn-g {
-  background: transparent; color: var(--dim);
-  border: 1px solid var(--border); border-radius: 100px;
-  padding: 14px 32px;
-  font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 1rem;
-  text-decoration: none; cursor: pointer;
-  transition: border-color 0.15s, color 0.15s;
-}
-.btn-g:hover { border-color: var(--pink); color: var(--pink); }
-
-/* ── Section ── */
-.section { padding: 80px 24px; }
-.section-inner { max-width: 1040px; margin-inline: auto; }
-.eyebrow {
-  font-size: 0.75rem; font-weight: 700;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--pink); margin-bottom: 12px;
-}
-.section-h {
-  font-family: 'Syne', sans-serif; font-weight: 800;
-  font-size: clamp(1.9rem, 4.5vw, 2.8rem);
-  letter-spacing: -0.03em; line-height: 1.08;
-  text-wrap: balance; margin-bottom: 16px;
-}
-.section-p {
-  color: var(--dim); font-size: 1.05rem;
-  max-width: 520px; margin-bottom: 56px;
-  text-wrap: balance;
-}
-
-/* ── PHONE MOCKUPS ── */
-.phones-row {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
-  align-items: start;
-}
-.phone-wrap { display: flex; flex-direction: column; align-items: center; gap: 20px; }
-.phone-label {
-  font-size: 0.8rem; font-weight: 600;
-  letter-spacing: 0.06em; text-transform: uppercase;
-  color: var(--pink);
-}
-.phone-desc { font-size: 0.88rem; color: var(--dim); text-align: center; line-height: 1.5; }
-
-.phone {
-  width: 220px;
-  background: #0E0A22;
-  border-radius: 38px;
-  border: 2px solid #2E2558;
-  box-shadow: 0 0 0 1px #1A144A, 0 30px 80px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.08);
-  overflow: hidden;
-  position: relative;
-  flex-shrink: 0;
-}
-.phone-notch {
-  background: #0E0A22;
-  height: 24px;
-  display: flex; align-items: center; justify-content: center;
-  padding-top: 4px;
-}
-.phone-notch-pill {
-  width: 60px; height: 10px;
-  background: #1A1540;
-  border-radius: 10px;
-  border: 1px solid #2E2558;
-}
-.phone-status {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 2px 14px 6px;
-  font-size: 7px; font-weight: 600; color: var(--dim);
-  font-variant-numeric: tabular-nums;
-}
-.phone-screen { padding: 0 0 8px; }
-
-/* Screen 1: Messages */
-.msg-header { padding: 8px 14px 10px; border-bottom: 1px solid rgba(255,255,255,0.06); }
-.msg-header-title { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 800; color: var(--text); margin-bottom: 8px; }
-.msg-search { background: rgba(255,255,255,0.06); border-radius: 8px; padding: 5px 10px; font-size: 8px; color: var(--muted); display: flex; align-items: center; gap: 4px; }
-.msg-thread { display: flex; align-items: center; gap: 10px; padding: 8px 14px; border-bottom: 1px solid rgba(255,255,255,0.04); }
-.msg-thread:last-child { border-bottom: none; }
-.avatar { width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 14px; position: relative; }
-.avatar .presence { position: absolute; bottom: 1px; right: 1px; width: 8px; height: 8px; background: #22C55E; border-radius: 50%; border: 1.5px solid #0E0A22; }
-.avatar .presence.away { background: #F59E0B; }
-.msg-thread-body { flex: 1; min-width: 0; }
-.msg-name { font-size: 9px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
-.msg-preview { font-size: 7.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.msg-time { font-size: 7px; color: var(--muted); }
-.unread-badge { background: var(--pink); color: #fff; border-radius: 100px; font-size: 7px; font-weight: 700; padding: 1px 5px; min-width: 14px; text-align: center; }
-
-/* Screen 2: Chat Room */
-.room-header { padding: 8px 14px 8px; border-bottom: 1px solid rgba(255,255,255,0.06); display: flex; align-items: center; gap: 8px; }
-.room-back { font-size: 10px; color: var(--pink); }
-.room-info { flex: 1; }
-.room-name { font-size: 10px; font-weight: 700; color: var(--text); }
-.room-online { font-size: 7px; color: #22C55E; }
-.room-bubbles { padding: 8px 10px; display: flex; flex-direction: column; gap: 6px; }
-.bubble { display: flex; align-items: flex-end; gap: 5px; }
-.bubble.me { flex-direction: row-reverse; }
-.bubble-avatar { width: 16px; height: 16px; border-radius: 50%; font-size: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.bubble-text { max-width: 120px; background: rgba(255,255,255,0.08); border-radius: 12px 12px 12px 3px; padding: 5px 8px; font-size: 7.5px; color: var(--text); line-height: 1.4; }
-.bubble.me .bubble-text { background: linear-gradient(135deg, var(--pink), var(--fuchsia)); border-radius: 12px 12px 3px 12px; }
-.bubble-name { font-size: 6px; color: var(--dim); margin-bottom: 2px; padding-left: 2px; }
-.vk-bar { margin: 6px 10px 4px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 6px 10px; display: flex; align-items: center; justify-content: space-between; }
-.vk-prompt { font-size: 7px; color: var(--muted); }
-.vk-icon { background: var(--pink); color: #fff; border-radius: 6px; padding: 3px 7px; font-size: 7px; font-weight: 700; }
-
-/* Screen 3: Translation */
-.trans-header { padding: 8px 14px 8px; border-bottom: 1px solid rgba(255,255,255,0.06); display: flex; align-items: center; gap: 8px; }
-.trans-name { font-size: 10px; font-weight: 700; color: var(--text); }
-.trans-status { font-size: 7px; color: #22C55E; }
-.trans-messages { padding: 8px 10px; display: flex; flex-direction: column; gap: 8px; }
-.voice-bubble { display: flex; align-items: center; gap: 5px; }
-.voice-bubble.me { flex-direction: row-reverse; }
-.voice-inner { background: rgba(255,255,255,0.08); border-radius: 12px 12px 12px 3px; padding: 6px 10px; display: flex; align-items: center; gap: 6px; }
-.voice-bubble.me .voice-inner { background: linear-gradient(135deg, var(--pink), var(--fuchsia)); border-radius: 12px 12px 3px 12px; }
-.play-btn { width: 14px; height: 14px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 6px; flex-shrink: 0; }
-.waveform { display: flex; align-items: center; gap: 1.5px; height: 14px; }
-.wave-bar { width: 2px; border-radius: 2px; background: rgba(255,255,255,0.4); }
-.wave-bar.played { background: rgba(255,255,255,0.9); }
-.voice-dur { font-size: 6.5px; color: rgba(255,255,255,0.7); }
-.trans-card { margin: 0 10px; background: rgba(124,58,237,0.12); border: 1px solid rgba(124,58,237,0.3); border-radius: 10px; padding: 8px 10px; }
-.trans-card::before { content: '🌐 Auto-Translated'; font-size: 6px; font-weight: 700; color: var(--purple); letter-spacing: 0.05em; text-transform: uppercase; display: block; margin-bottom: 4px; }
-.trans-original { font-size: 7px; color: var(--muted); margin-bottom: 4px; }
-.trans-result { font-size: 8.5px; color: var(--text); font-weight: 500; line-height: 1.4; }
-.trans-lang { display: flex; gap: 6px; margin-top: 5px; }
-.trans-tag { font-size: 6px; font-weight: 600; background: rgba(124,58,237,0.2); border: 1px solid rgba(124,58,237,0.3); border-radius: 4px; padding: 1px 5px; color: #A78BFA; }
-
-/* ── Install Section ── */
-.install-section { background: var(--surface); border: 1px solid var(--border); border-radius: 24px; padding: 56px 48px; position: relative; overflow: hidden; }
-.install-glow { position: absolute; top: -80px; right: -80px; width: 280px; height: 280px; background: radial-gradient(circle, rgba(232,64,154,0.16), transparent 70%); pointer-events: none; }
-.install-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
-.install-steps { display: flex; flex-direction: column; gap: 28px; }
-.install-step { display: flex; gap: 16px; align-items: flex-start; }
-.step-num { width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0; background: linear-gradient(135deg, var(--pink), var(--fuchsia)); display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 0.85rem; color: #fff; margin-top: 2px; }
-.step-title { font-weight: 600; font-size: 0.95rem; margin-bottom: 4px; }
-.step-desc { color: var(--dim); font-size: 0.85rem; line-height: 1.55; }
-
-/* Meta AI app phone mockup — matches real screenshot */
-.meta-phone {
-  width: 210px;
-  background: #1C1C1E;
-  border-radius: 38px;
-  border: 2px solid #2C2C2E;
-  box-shadow: 0 0 0 1px #111, 0 30px 80px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.06);
-  overflow: hidden; margin-inline: auto;
-  font-family: -apple-system, 'DM Sans', sans-serif;
-}
-.meta-notch { height: 24px; background: #1C1C1E; display: flex; align-items: center; justify-content: center; padding-top: 5px; }
-.meta-notch-pill { width: 62px; height: 10px; background: #0A0A0C; border-radius: 10px; }
-.meta-status { display: flex; justify-content: space-between; align-items: center; padding: 1px 16px 4px; font-size: 7px; color: #8E8E93; font-weight: 600; letter-spacing: 0.02em; }
-.meta-topbar { display: flex; align-items: center; justify-content: center; padding: 4px 14px 8px; position: relative; }
-.meta-back { position: absolute; left: 14px; background: #2C2C2E; border-radius: 50%; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; font-size: 9px; color: #fff; }
-.meta-page-title { font-size: 11px; font-weight: 700; color: #fff; }
-.meta-card { background: #2C2C2E; border-radius: 12px; margin: 4px 10px; overflow: hidden; }
-.meta-row { display: flex; align-items: center; gap: 9px; padding: 7px 10px; border-bottom: 1px solid rgba(255,255,255,0.06); }
-.meta-row:last-child { border-bottom: none; }
-.meta-row-icon { width: 26px; height: 26px; border-radius: 7px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 13px; }
-.meta-row-body { flex: 1; min-width: 0; }
-.meta-row-name { font-size: 9px; font-weight: 600; color: #fff; }
-.meta-row-sub { font-size: 7px; color: #8E8E93; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.meta-row-chevron { font-size: 9px; color: #48484A; }
-.meta-section-header { padding: 8px 14px 4px; font-size: 8px; font-weight: 600; color: #8E8E93; letter-spacing: 0.04em; text-transform: uppercase; }
-.meta-row.spark-row { background: rgba(232,64,154,0.08); }
-
-/* ── Translation Feature Section ── */
-.trans-section { background: linear-gradient(135deg, #0D0821 0%, #1A0A3A 60%, #0A0C2A 100%); border: 1px solid rgba(124,58,237,0.22); border-radius: 24px; padding: 56px 48px; position: relative; overflow: hidden; }
-.trans-glow-l { position: absolute; left: -80px; top: 50%; transform: translateY(-50%); width: 300px; height: 300px; background: radial-gradient(circle, rgba(124,58,237,0.2), transparent 70%); pointer-events: none; }
-.trans-glow-r { position: absolute; right: -60px; bottom: -60px; width: 220px; height: 220px; background: radial-gradient(circle, rgba(232,64,154,0.15), transparent 70%); pointer-events: none; }
-.trans-section-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; position: relative; z-index: 1; }
-.trans-visual { display: flex; flex-direction: column; gap: 12px; }
-.trans-pair { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 16px 20px; }
-.trans-pair-lang { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
-.lang-pt { color: #60A5FA; }
-.lang-en { color: #4ADE80; }
-.lang-es { color: #FBBF24; }
-.trans-pair-text { font-size: 0.95rem; line-height: 1.5; }
-.trans-pair-sub { font-size: 0.8rem; color: var(--dim); margin-top: 4px; }
-.trans-arrow { text-align: center; font-size: 1.2rem; color: var(--purple); opacity: 0.7; }
-
-/* ── Features ── */
-.feat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-.feat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px 24px; transition: border-color 0.2s, transform 0.2s; }
-.feat-card:hover { border-color: rgba(232,64,154,0.4); transform: translateY(-2px); }
-.feat-icon { font-size: 2rem; display: block; margin-bottom: 14px; }
-.feat-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; margin-bottom: 6px; }
-.feat-desc { color: var(--dim); font-size: 0.88rem; line-height: 1.55; }
-
-/* ── Glasses Section ── */
-.glasses-section { background: var(--surface); border: 1px solid var(--border); border-radius: 24px; padding: 56px 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; position: relative; overflow: hidden; }
-.glasses-glow { position: absolute; right: -60px; top: -60px; width: 260px; height: 260px; background: radial-gradient(circle, rgba(192,38,211,0.16), transparent 70%); pointer-events: none; }
-.glasses-visual-area { display: flex; flex-direction: column; align-items: center; gap: 16px; }
-.glasses-frame { font-size: 4.5rem; line-height: 1; filter: drop-shadow(0 0 30px rgba(192,38,211,0.5)); }
-.hud-box { background: rgba(0,0,0,0.7); border: 1px solid rgba(232,64,154,0.4); border-radius: 12px; padding: 12px 16px; width: 100%; backdrop-filter: blur(8px); }
-.hud-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--pink); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
-.hud-dot { width: 5px; height: 5px; border-radius: 50%; background: #22C55E; display: inline-block; }
-.hud-msg { font-size: 0.78rem; color: var(--text); margin-bottom: 4px; }
-.hud-msg .sender { color: var(--pink); font-weight: 600; }
-.hud-msg .txt { color: var(--dim); }
-.glasses-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
-.gpill { background: var(--surface2); border: 1px solid var(--border); border-radius: 100px; padding: 5px 14px; font-size: 0.8rem; font-weight: 500; color: var(--dim); }
-
-/* ── Lounge ── */
-.lounge-section { background: linear-gradient(135deg, #0F0620 0%, #1E0838 50%, #110823 100%); border: 1px solid rgba(192,38,211,0.2); border-radius: 24px; padding: 56px; text-align: center; position: relative; overflow: hidden; }
-.lounge-section::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 50% at 50% 110%, rgba(232,64,154,0.16), transparent 65%); pointer-events: none; }
-.lounge-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(1.8rem, 4vw, 2.4rem); letter-spacing: -0.03em; margin-bottom: 12px; }
-.lounge-sub { color: var(--dim); max-width: 420px; margin-inline: auto; font-size: 0.95rem; margin-bottom: 32px; }
-.room-chips { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-.room-chip { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); border-radius: 100px; padding: 8px 16px; font-size: 0.85rem; font-weight: 500; color: var(--text); }
-.room-chip .restricted { font-size: 0.7rem; color: var(--pink); margin-left: 4px; }
-
-/* ── CTA ── */
-.cta-section { text-align: center; padding: 100px 24px; position: relative; overflow: hidden; }
-.cta-glow { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 600px; height: 300px; background: radial-gradient(ellipse at center, var(--glow), var(--pglow) 40%, transparent 70%); pointer-events: none; }
-.cta-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(2.4rem, 7vw, 4rem); letter-spacing: -0.04em; line-height: 1.04; text-wrap: balance; margin-bottom: 16px; }
-.cta-sub { color: var(--dim); font-size: 1.05rem; margin-bottom: 36px; }
-
-/* ── Footer ── */
-footer { border-top: 1px solid var(--border); padding: 32px 24px; }
-.footer-inner { max-width: 1040px; margin-inline: auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
-.footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.1rem; text-decoration: none; color: var(--text); letter-spacing: -0.02em; }
-.footer-logo span { color: var(--pink); }
-.footer-links { display: flex; gap: 24px; font-size: 0.82rem; }
-.footer-links a { color: var(--muted); text-decoration: none; }
-.footer-links a:hover { color: var(--dim); }
-.footer-copy { color: var(--muted); font-size: 0.8rem; }
-
-/* ── Divider ── */
-.divider { border: none; border-top: 1px solid var(--border); max-width: 1040px; margin: 0 auto; }
-
-/* ── Responsive ── */
-@media (max-width: 768px) {
-  .phones-row { grid-template-columns: 1fr; align-items: center; }
-  .phone-wrap { max-width: 260px; margin-inline: auto; }
-  .install-grid, .glasses-section, .trans-section-inner { grid-template-columns: 1fr; gap: 36px; }
-  .install-section, .glasses-section, .trans-section, .lounge-section { padding: 36px 24px; }
-  .feat-grid { grid-template-columns: 1fr 1fr; }
-  .nav-links { display: none; }
-  .meta-phone, .glasses-visual-area { margin-inline: auto; }
-}
-@media (max-width: 480px) {
-  .feat-grid { grid-template-columns: 1fr; }
-  .section { padding: 60px 16px; }
-  .hero { padding: 70px 16px 60px; }
-}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="light dark" />
+  <link rel="icon" href="img/favicon.png" />
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png" />
+  <title>Spark — Dating for Meta Ray-Ban Display</title>
+  <meta name="description" content="Spark is the dating web app built for Meta Ray-Ban Display glasses." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #0b1026;
+      --bg-2: #101735;
+      --surface: rgba(24,31,66,.76);
+      --surface-solid: #171f46;
+      --ink: #ffffff;
+      --muted: #bdc4dc;
+      --line: rgba(255,255,255,.12);
+      --pink: #ff2e88;
+      --pink-hot: #ff4b9b;
+      --pink-soft: rgba(255,46,136,.16);
+      --yellow: #ffd44f;
+      --navy: #070b1b;
+      --shadow: 0 30px 90px rgba(0,0,0,.38);
+      --radius-lg: 32px;
+      --radius-md: 22px;
+      --max: 1180px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #070a19;
+        --bg-2: #0b1026;
+        --surface: rgba(19,25,54,.72);
+        --surface-solid: #111936;
+        --muted: #b6bdd5;
+        --line: rgba(255,255,255,.11);
+        --navy: #050816;
+      }
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 92px; }
+    body {
+      margin: 0;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at 5% 14%, rgba(255,46,136,.10), transparent 26rem),
+        radial-gradient(circle at 94% 44%, rgba(255,212,79,.07), transparent 24rem),
+        var(--bg);
+      color: var(--ink);
+      font-family: "DM Sans", sans-serif;
+      line-height: 1.55;
+    }
+    a { color: inherit; }
+    img { display: block; max-width: 100%; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    .wrap { width: min(var(--max), calc(100% - 40px)); margin-inline: auto; }
+    .nav-shell {
+      position: sticky; top: 0; z-index: 50;
+      background: color-mix(in srgb, var(--bg) 78%, transparent);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(18px);
+    }
+    nav { min-height: 76px; display: flex; align-items: center; gap: 28px; }
+    .brand { display: inline-flex; align-items: center; gap: 11px; text-decoration: none; flex: none; }
+    .brand img { width: 42px; height: 42px; object-fit: cover; border-radius: 50%; box-shadow: 0 0 24px rgba(255,46,136,.28); }
+    .brand span { font-family: Manrope, sans-serif; font-size: 1.28rem; font-weight: 800; letter-spacing: -.04em; }
+    .nav-links { display: flex; align-items: center; gap: 24px; margin-left: auto; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: .92rem; font-weight: 600; }
+    .nav-links a:hover, .nav-links a:focus-visible { color: var(--ink); }
+    .button {
+      display: inline-flex; justify-content: center; align-items: center; gap: 9px;
+      min-height: 50px; padding: 0 22px; border-radius: 999px; border: 1px solid transparent;
+      text-decoration: none; font-weight: 750; transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .button:hover { transform: translateY(-2px); }
+    .button.primary { background: var(--pink); color: #fff; box-shadow: 0 12px 35px rgba(255,46,136,.28); }
+    .button.secondary { border-color: var(--line); background: var(--surface); color: var(--ink); }
+    .nav-cta { min-height: 42px; padding: 0 18px; font-size: .9rem; }
+    .hero { padding: clamp(56px, 8vw, 112px) 0 80px; }
+    .hero-grid { display: grid; grid-template-columns: minmax(0,1.02fr) minmax(360px,.78fr); gap: clamp(42px, 7vw, 92px); align-items: center; }
+    .eyebrow { display: flex; align-items: center; gap: 10px; color: var(--pink); font-weight: 750; margin: 0 0 20px; }
+    .spark-mark { color: var(--yellow); font-size: 1.18em; }
+    h1, h2, h3 { font-family: Manrope, sans-serif; margin: 0; line-height: 1.04; letter-spacing: -.045em; }
+    h1 { font-size: clamp(3.25rem, 7vw, 6.4rem); max-width: 850px; }
+    h1 em { color: var(--pink); font-style: normal; }
+    .hero-copy > p:not(.eyebrow) { max-width: 640px; font-size: clamp(1.08rem, 2vw, 1.3rem); color: var(--muted); margin: 25px 0 31px; }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
+    .hero-visual { position: relative; max-width: 480px; justify-self: end; }
+    .hero-visual::before { content:""; position:absolute; inset: 8% -7% -3% 10%; border-radius: 46% 54% 47% 53%; background: var(--pink); filter: blur(58px); opacity:.26; }
+    .hero-visual img { position: relative; width: 100%; aspect-ratio: 2 / 3; object-fit: cover; border-radius: 120px 32px 120px 32px; box-shadow: var(--shadow); }
+    .float-note { position:absolute; right: -28px; bottom: 34px; z-index:2; width: 190px; padding: 14px 16px; border:1px solid var(--line); border-radius:18px; background:var(--surface); backdrop-filter: blur(18px); box-shadow:var(--shadow); }
+    .float-note strong { display:block; font-size:.9rem; }
+    .float-note small { color:var(--muted); }
+    .setup { background: var(--navy); color:#fff; padding: 72px 0; position:relative; overflow:hidden; }
+    .setup::after { content:"✦"; position:absolute; right:4%; top:-34px; color:var(--yellow); font-size:180px; opacity:.08; }
+    .setup h2 { font-size:clamp(2.2rem, 4.4vw, 4.2rem); max-width:840px; }
+    .setup h2 span { color:var(--pink-hot); }
+    .setup-tagline { margin:16px 0 0; color:#fff; font:700 clamp(1.08rem,2vw,1.35rem)/1.35 Manrope,sans-serif; letter-spacing:-.025em; }
+    .setup-content { display:grid; grid-template-columns:minmax(220px,.42fr) minmax(0,1.58fr); gap:clamp(32px,6vw,76px); align-items:center; margin-top:38px; }
+    .setup-phone { margin:0; width:min(100%,290px); justify-self:center; }
+    .setup-phone img { width:100%; height:auto; filter:drop-shadow(0 28px 50px rgba(0,0,0,.34)); }
+    .steps { display:grid; grid-template-columns:repeat(2,1fr); gap:18px 14px; }
+    .step { position:relative; padding:23px 18px 20px; border-top:1px solid rgba(255,255,255,.22); }
+    .step .num { color:var(--yellow); font:800 2.3rem/1 Manrope,sans-serif; }
+    .step h3 { font-size:1.02rem; letter-spacing:-.02em; margin:17px 0 5px; }
+    .step p { color:#adb5cf; margin:0; font-size:.91rem; }
+    section { padding: clamp(78px, 10vw, 130px) 0; }
+    .section-head { display:grid; grid-template-columns:minmax(0,1fr) minmax(260px,.52fr); gap:38px; align-items:end; margin-bottom:48px; }
+    .section-head h2, .split-copy h2, .safety-intro h2 { font-size:clamp(2.55rem, 5vw, 5rem); }
+    .section-head p, .split-copy > p, .safety-intro > p { color:var(--muted); font-size:1.08rem; margin:0; }
+    .screens-showcase { margin:0; overflow:hidden; border-radius:var(--radius-lg); background:#050316; box-shadow:var(--shadow); }
+    .screens-showcase img { width:100%; height:auto; }
+    .split { display:grid; grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr); gap:clamp(42px,8vw,100px); align-items:center; }
+    .photo-frame { position:relative; }
+    .photo-frame img { width:100%; aspect-ratio: 3 / 2; object-fit:cover; border-radius:34px 110px 34px 34px; box-shadow:var(--shadow); }
+    .photo-caption { position:absolute; left:22px; bottom:22px; max-width:280px; background:#0b1026; color:#fff; border-radius:18px; padding:17px 19px; box-shadow:0 20px 50px rgba(0,0,0,.34); }
+    .photo-caption small { color:#adb5cf; display:block; margin-top:3px; }
+    .split-copy .eyebrow { margin-bottom:18px; }
+    .premium-tag { display:inline-flex; align-items:center; padding:3px 10px; border-radius:999px; border:1px solid currentColor; font-size:0.72rem; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; line-height:1.3; }
+    .split-copy > p { margin:24px 0; }
+    .checkline { display:flex; gap:12px; align-items:flex-start; margin:13px 0; font-weight:650; }
+    .checkline i { font-style:normal; color:var(--yellow); }
+    .features { padding-top:42px; }
+    .feature-layout { display:grid; grid-template-columns:.75fr 1.4fr; gap:34px; align-items:start; }
+    .feature-sticky { position:sticky; top:112px; }
+    .feature-sticky h2 { font-size:clamp(2.5rem,4.7vw,4.6rem); }
+    .feature-sticky p { color:var(--muted); font-size:1.08rem; }
+    .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:15px; }
+    .feature-card { min-height:220px; padding:26px; border:1px solid var(--line); background:var(--surface); border-radius:24px; }
+    .feature-card:nth-child(3) { grid-column:1/-1; min-height:180px; background:var(--navy); color:#fff; }
+    .feature-card .emoji { font-size:1.8rem; }
+    .feature-card h3 { font-size:1.35rem; margin:19px 0 9px; letter-spacing:-.025em; }
+    .feature-card p { color:var(--muted); margin:0; }
+    .feature-card:nth-child(3) p { color:#b8bfd4; }
+    .safety { background:linear-gradient(135deg, #f51778 0%, #d70b62 100%); color:#fff; }
+    .safety-wrap { display:grid; grid-template-columns:.75fr 1.25fr; gap:70px; }
+    .safety-intro p { color:rgba(255,255,255,.78); margin:22px 0 26px; }
+    .free-note { display:inline-flex; gap:10px; align-items:center; background:#fff; color:#a60447; padding:12px 16px; border-radius:14px; font-weight:800; }
+    .safety-list { display:grid; gap:10px; }
+    .safety-row { padding:22px 0; border-bottom:1px solid rgba(255,255,255,.25); display:grid; grid-template-columns:50px 1fr; gap:17px; }
+    .safety-row:last-child { border-bottom:0; }
+    .safety-icon { width:50px; height:50px; border-radius:50%; display:grid; place-items:center; background:rgba(255,255,255,.14); font-size:1.2rem; }
+    .safety-row h3 { font-size:1.25rem; margin-bottom:5px; letter-spacing:-.02em; }
+    .safety-row p { margin:0; color:rgba(255,255,255,.76); }
+    .lounge .photo-frame img { border-radius:34px 34px 110px 34px; }
+    .rooms { display:flex; flex-wrap:wrap; gap:9px; margin:27px 0; }
+    .room { padding:9px 13px; border:1px solid var(--line); border-radius:999px; background:var(--surface); font-weight:650; font-size:.9rem; }
+    .pop-up { padding:18px 20px; border:1px solid color-mix(in srgb, var(--yellow) 50%, transparent); background:color-mix(in srgb, var(--yellow) 12%, var(--surface)); border-radius:18px; }
+    .pop-up strong { display:block; }
+    .pop-up span { color:var(--muted); }
+    .final { padding-top:32px; }
+    .cta-band { overflow:hidden; position:relative; background:var(--navy); color:#fff; border-radius:48px; padding:clamp(48px,7vw,82px); display:flex; justify-content:space-between; gap:30px; align-items:center; }
+    .cta-band::before { content:"✦"; position:absolute; color:var(--yellow); font-size:190px; right:29%; top:-82px; opacity:.15; }
+    .cta-band h2 { font-size:clamp(2.45rem,5.4vw,5.25rem); max-width:680px; position:relative; }
+    .cta-band .button { flex:none; position:relative; min-height:58px; padding:0 28px; }
+    footer { padding:64px 0 34px; }
+    .footer-top { display:flex; justify-content:space-between; gap:34px; align-items:center; padding-bottom:28px; border-bottom:1px solid var(--line); }
+    .footer-brand { display:flex; align-items:center; gap:14px; }
+    .footer-brand img { width:48px; height:48px; object-fit:cover; border-radius:50%; }
+    .footer-brand strong { display:block; font:800 1.2rem Manrope,sans-serif; }
+    .footer-brand span { color:var(--muted); font-size:.92rem; }
+    .footer-links { display:flex; flex-wrap:wrap; gap:20px; }
+    .footer-links a { color:var(--muted); text-decoration:none; font-weight:600; }
+    .footer-links a:hover { color:var(--pink); }
+    .footer-bottom { display:flex; justify-content:space-between; gap:20px; margin-top:22px; color:var(--muted); font-size:.86rem; }
+    .reveal { opacity:1; transform:none; transition:transform .65s ease; }
+    .reveal.in { transform:none; }
+    @media (max-width: 860px) {
+      .nav-links a:not(.button) { display:none; }
+      .hero-grid, .split, .feature-layout, .safety-wrap { grid-template-columns:1fr; }
+      .hero-visual { justify-self:center; max-width:540px; }
+      .setup-content { grid-template-columns:minmax(180px,.48fr) minmax(0,1.52fr); gap:28px; }
+      .setup-phone { width:min(100%,250px); }
+      .steps { grid-template-columns:1fr 1fr; }
+      .section-head { grid-template-columns:1fr; gap:18px; }
+      .section-head p { max-width:580px; }
+      .feature-sticky { position:static; }
+      .safety-wrap { gap:36px; }
+      .lounge .photo-frame { order:2; }
+      .cta-band { align-items:flex-start; flex-direction:column; }
+    }
+    @media (max-width: 580px) {
+      .wrap { width:min(var(--max), calc(100% - 28px)); }
+      nav { min-height:68px; gap:12px; }
+      .brand img { width:37px; height:37px; }
+      .brand span { font-size:1.1rem; }
+      .nav-links { margin-left:auto; }
+      .nav-cta { padding:0 13px; min-height:40px; font-size:.82rem; }
+      .hero { padding-top:46px; }
+      h1 { font-size:clamp(3rem,15vw,4.5rem); }
+      .hero-visual img { border-radius:74px 24px 74px 24px; }
+      .float-note { right:-4px; bottom:20px; width:174px; }
+      .setup-content { grid-template-columns:1fr; gap:30px; margin-top:32px; }
+      .setup-phone { width:min(100%,260px); }
+      .steps, .feature-grid { grid-template-columns:1fr; }
+      .step { display:grid; grid-template-columns:52px 1fr; column-gap:8px; }
+      .step .num { grid-row:1/3; }
+      .step h3 { margin:2px 0 4px; }
+      .feature-card:nth-child(3) { grid-column:auto; }
+      .screens-showcase { border-radius:20px; }
+      .photo-frame img, .lounge .photo-frame img { border-radius:24px 70px 24px 24px; aspect-ratio:4/5; }
+      .feature-card { min-height:auto; }
+      .safety-row { grid-template-columns:42px 1fr; }
+      .safety-icon { width:42px; height:42px; }
+      .rooms { gap:7px; }
+      .room { font-size:.83rem; }
+      .cta-band { border-radius:30px; padding:42px 27px; }
+      .footer-top, .footer-bottom { align-items:flex-start; flex-direction:column; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior:auto; }
+      *, *::before, *::after { animation:none !important; transition:none !important; }
+      .reveal { opacity:1; transform:none; }
+    }
+  
+    /* keep decorative glows from causing sideways scroll on phones (clip keeps the sticky nav working) */
+    html, body { overflow-x: clip; }
+  </style>
 </head>
 <body>
+  <header class="nav-shell">
+    <nav class="wrap" aria-label="Primary navigation">
+      <a class="brand" href="#top" aria-label="Spark home"><img src="img/spark-logo.webp" alt="Spark logo"><span>Spark</span></a>
+      <div class="nav-links">
+        <a href="#features">Features</a><a href="#glasses">Glasses</a><a href="#translation">Translation</a><a href="#lounge">Lounge</a>
+        <a class="button primary nav-cta" href="https://smartsparks.app">Try Spark free</a>
+      </div>
+    </nav>
+  </header>
 
-<!-- Nav -->
-<nav>
-  <div class="nav-inner">
-    <a href="#" class="nav-logo">✦ <span class="logo-spark">Spark</span></a>
-    <ul class="nav-links">
-      <li><a href="#screens">App</a></li>
-      <li><a href="#install">Install</a></li>
-      <li><a href="#features">Features</a></li>
-      <li><a href="#lounge">Lounge</a></li>
-    </ul>
-    <a href="https://smartsparks.app" class="nav-cta">Open App</a>
-  </div>
-</nav>
+  <main id="top">
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="spark-mark">✦</span> Dating, without looking down</p>
+          <h1>The dating app built <em>for your face.</em></h1>
+          <p>Chat, flirt, and meet — right in your Meta Ray-Ban Display glasses. No App Store. No download.</p>
+          <div class="cta-row"><a class="button primary" href="https://smartsparks.app">Connect Spark <span aria-hidden="true">→</span></a><a class="button secondary" href="#glasses">How it works</a></div>
+        </div>
+        <div class="hero-visual reveal">
+          <img src="img/hero-couple-glasses.webp" alt="A stylish couple wearing smart glasses in an evening city setting">
+          <div class="float-note"><strong>Voice or gesture</strong><small>Keep the moment moving.</small></div>
+        </div>
+      </div>
+    </section>
 
-<!-- Hero -->
-<div class="hero">
-  <div class="hero-glow"></div>
-  <div class="badge">✦ Built for Meta Ray-Ban Display Glasses</div>
-  <h1>Social dating<br>for the <span class="grad">real world.</span></h1>
-  <p>Spark runs on your Meta Ray-Ban glasses — hands-free messaging, live translation, and group chat rooms, all in your field of view.</p>
-  <div class="hero-btns">
-    <a href="#install" class="btn-p">Get Started Free</a>
-    <a href="#screens" class="btn-g">See How It Works</a>
-  </div>
-</div>
-
-<hr class="divider">
-
-<!-- App Screens -->
-<div class="section" id="screens">
-  <div class="section-inner">
-    <div class="eyebrow">App Screens</div>
-    <h2 class="section-h">Three screens.<br>One seamless experience.</h2>
-    <p class="section-p">From direct messages to live chat rooms to voice translation — Spark keeps every conversation flowing.</p>
-
-    <div class="phones-row">
-
-      <!-- Phone 1: Messages -->
-      <div class="phone-wrap">
-        <div class="phone-label">Messages</div>
-        <div class="phone">
-          <div class="phone-notch"><div class="phone-notch-pill"></div></div>
-          <div class="phone-status"><span>9:41</span><span>●●● 5G ▮▮▮</span></div>
-          <div class="phone-screen">
-            <div class="msg-header">
-              <div class="msg-header-title">Messages</div>
-              <div class="msg-search">🔍 &nbsp;Search conversations…</div>
-            </div>
-            <div class="msg-thread">
-              <div class="avatar" style="background:linear-gradient(135deg,#E8409A,#7C3AED)">A<span class="presence"></span></div>
-              <div class="msg-thread-body"><div class="msg-name">Aaliyah M.</div><div class="msg-preview">Loved that playlist you shared 🔥</div></div>
-              <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px"><div class="msg-time">2m</div><div class="unread-badge">3</div></div>
-            </div>
-            <div class="msg-thread">
-              <div class="avatar" style="background:linear-gradient(135deg,#0EA5E9,#6366F1)">J<span class="presence away"></span></div>
-              <div class="msg-thread-body"><div class="msg-name">Jordan K.</div><div class="msg-preview">You free this weekend?</div></div>
-              <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px"><div class="msg-time">18m</div></div>
-            </div>
-            <div class="msg-thread">
-              <div class="avatar" style="background:linear-gradient(135deg,#F59E0B,#EF4444)">M<span class="presence"></span></div>
-              <div class="msg-thread-body"><div class="msg-name">Maya R. ✓</div><div class="msg-preview">Voice note • 0:12</div></div>
-              <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px"><div class="msg-time">1h</div><div class="unread-badge">1</div></div>
-            </div>
-            <div class="msg-thread">
-              <div class="avatar" style="background:linear-gradient(135deg,#10B981,#0EA5E9)">D</div>
-              <div class="msg-thread-body"><div class="msg-name">DeShawn B.</div><div class="msg-preview">⚡ Spark Score matched!</div></div>
-              <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px"><div class="msg-time">3h</div></div>
-            </div>
-            <div class="msg-thread">
-              <div class="avatar" style="background:linear-gradient(135deg,#8B5CF6,#EC4899)">S<span class="presence"></span></div>
-              <div class="msg-thread-body"><div class="msg-name">Sofia L.</div><div class="msg-preview">Hola! Como estás? 🌸</div></div>
-              <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px"><div class="msg-time">5h</div><div class="unread-badge">2</div></div>
-            </div>
+    <section class="setup" id="glasses">
+      <div class="wrap">
+        <h2>Not an app download. <span>A web app you connect.</span></h2>
+        <p class="setup-tagline">Built for your Ray-Ban Display glasses</p>
+        <div class="setup-content">
+          <figure class="setup-phone reveal">
+            <img src="img/meta-ai-app-web-apps.webp" loading="lazy" decoding="async" alt="Meta AI app Apps screen showing Sparks Dating at smartsparks.app under Web Apps">
+          </figure>
+          <div class="steps">
+            <div class="step"><div class="num">01</div><div><h3>Get the Meta AI app</h3><p>Start in the app your glasses already use.</p></div></div>
+            <div class="step"><div class="num">02</div><div><h3>Enable Developer Mode</h3><p>Open up Web Apps for your display.</p></div></div>
+            <div class="step"><div class="num">03</div><div><h3>Add Spark</h3><p>Use smartsparks.app as your Web App.</p></div></div>
+            <div class="step"><div class="num">04</div><div><h3>Launch from your glasses</h3><p>Your dating life is now hands-free.</p></div></div>
           </div>
         </div>
-        <div class="phone-desc">Conversations with online presence, unread counts, and voice note previews</div>
       </div>
+    </section>
 
-      <!-- Phone 2: Chat Room -->
-      <div class="phone-wrap">
-        <div class="phone-label">Chat Room</div>
-        <div class="phone">
-          <div class="phone-notch"><div class="phone-notch-pill"></div></div>
-          <div class="phone-status"><span>9:41</span><span>●●● 5G ▮▮▮</span></div>
-          <div class="phone-screen">
-            <div class="room-header">
-              <div class="room-back">‹</div>
-              <div class="room-info"><div class="room-name">🎉 Friday Night Vibes</div><div class="room-online">● 47 online</div></div>
-            </div>
-            <div class="room-bubbles">
-              <div class="bubble">
-                <div class="bubble-avatar" style="background:linear-gradient(135deg,#E8409A,#7C3AED)">A</div>
-                <div><div class="bubble-name">Aaliyah</div><div class="bubble-text">This vibe is giving everything rn 🔥</div></div>
-              </div>
-              <div class="bubble">
-                <div class="bubble-avatar" style="background:linear-gradient(135deg,#0EA5E9,#6366F1)">J</div>
-                <div><div class="bubble-name">Jordan</div><div class="bubble-text">Anyone been to that new spot on 5th?</div></div>
-              </div>
-              <div class="bubble me">
-                <div class="bubble-avatar" style="background:linear-gradient(135deg,#F59E0B,#EF4444)">Y</div>
-                <div><div class="bubble-text">Yes!! Go on a Friday, the DJ is 🔥</div></div>
-              </div>
-              <div class="bubble">
-                <div class="bubble-avatar" style="background:linear-gradient(135deg,#10B981,#0EA5E9)">M</div>
-                <div><div class="bubble-name">Maya</div><div class="bubble-text">ok adding it to my list for tonight</div></div>
-              </div>
-            </div>
-            <div class="vk-bar"><span class="vk-prompt">Type or use SparkVK…</span><span class="vk-icon">⌨ VK</span></div>
-          </div>
+    <section>
+      <div class="wrap">
+        <div class="section-head reveal"><h2>Three screens.<br>One seamless experience.</h2><p>Move from a private hello to a lively room to a translated voice note without breaking the connection.</p></div>
+        <figure class="screens-showcase reveal" id="features">
+          <img src="img/spark-three-screens.webp" loading="lazy" decoding="async" alt="Spark Messages, live Chat Room, and voice-note Translation screens shown side by side">
+        </figure>
+      </div>
+    </section>
+
+    <section id="translation">
+      <div class="wrap split">
+        <div class="photo-frame reveal"><img src="img/translation-couple.webp" loading="lazy" decoding="async" alt="A couple smiling together outdoors while wearing smart glasses"><div class="photo-caption"><strong>One tap to understand.</strong><small>Text and voice notes, in the user’s preferred language.</small></div></div>
+        <div class="split-copy reveal"><p class="eyebrow"><span class="spark-mark">✦</span> Translation built into chat <span class="premium-tag">Premium</span></p><h2>Say it in your language. They hear theirs.</h2><p>Connections shouldn’t stop at a language barrier. Spark translates text and voice notes in the user’s preferred language, right inside the conversation.</p><div class="checkline"><i>✦</i><span>Translation stays inside the chat</span></div><div class="checkline"><i>✦</i><span>Works for text and voice notes</span></div><div class="checkline"><i>✦</i><span>Tap once — keep talking</span></div></div>
+      </div>
+    </section>
+
+    <section class="features">
+      <div class="wrap feature-layout">
+        <div class="feature-sticky reveal"><p class="eyebrow"><span class="spark-mark">✦</span> More ways to connect</p><h2>Dating that feels alive.</h2><p>Less endless scrolling. More signals, play, and real conversation.</p></div>
+        <div class="feature-grid">
+          <article class="feature-card reveal"><span class="emoji" aria-hidden="true">🔥</span><h3>Fire or Ice</h3><p>Rate profiles hot or cold in a quick, playful game. A little fun with real chemistry behind it.</p></article>
+          <article class="feature-card reveal"><span class="emoji" aria-hidden="true">📍</span><h3>Nearby</h3><p>See who’s around you right now.</p></article>
+          <article class="feature-card reveal"><span class="emoji" aria-hidden="true">⚡</span><h3>Spark Score</h3><p>Your Fire rating from how others rate your profile, with a hot streak and a weekly chart.</p></article>
+          <article class="feature-card reveal"><span class="emoji" aria-hidden="true">⌨️</span><h3>SparkVK Keyboard</h3><p>Dictate, handwrite, or use word prediction from your glasses.</p></article>
+          <article class="feature-card reveal"><span class="emoji" aria-hidden="true">✓</span><h3>Verified Profiles</h3><p>Selfie verification reviewed by the Spark team, with a visible blue check.</p></article>
         </div>
-        <div class="phone-desc">Live group rooms with SparkVK keyboard for hands-free glasses typing</div>
       </div>
+    </section>
 
-      <!-- Phone 3: Translation -->
-      <div class="phone-wrap">
-        <div class="phone-label">Translation</div>
-        <div class="phone">
-          <div class="phone-notch"><div class="phone-notch-pill"></div></div>
-          <div class="phone-status"><span>9:41</span><span>●●● 5G ▮▮▮</span></div>
-          <div class="phone-screen">
-            <div class="trans-header">
-              <div class="room-back">‹</div>
-              <div class="room-info"><div class="trans-name">Sofia L. ✓</div><div class="trans-status">● Online</div></div>
-            </div>
-            <div class="trans-messages">
-              <div class="voice-bubble">
-                <div class="bubble-avatar" style="background:linear-gradient(135deg,#8B5CF6,#EC4899)">S</div>
-                <div class="voice-inner">
-                  <div class="play-btn">▶</div>
-                  <div class="waveform">
-                    <div class="wave-bar played" style="height:4px"></div><div class="wave-bar played" style="height:8px"></div><div class="wave-bar played" style="height:11px"></div><div class="wave-bar played" style="height:6px"></div><div class="wave-bar played" style="height:9px"></div><div class="wave-bar" style="height:13px"></div><div class="wave-bar" style="height:7px"></div><div class="wave-bar" style="height:5px"></div><div class="wave-bar" style="height:10px"></div><div class="wave-bar" style="height:8px"></div>
-                  </div>
-                  <div class="voice-dur">0:09</div>
-                </div>
-              </div>
-              <div class="trans-card">
-                <div class="trans-original">"Você é tão bonito, espero que possamos nos conhecer em breve!"</div>
-                <div class="trans-result">"You are so cute, I hope we can meet soon!"</div>
-                <div class="trans-lang">
-                  <span class="trans-tag">🇧🇷 PT</span>
-                  <span style="font-size:8px;color:var(--muted);margin:0 2px">→</span>
-                  <span class="trans-tag" style="background:rgba(74,222,128,0.1);border-color:rgba(74,222,128,0.3);color:#4ADE80">🇺🇸 EN</span>
-                </div>
-              </div>
-              <div class="voice-bubble me">
-                <div class="bubble-avatar" style="background:linear-gradient(135deg,#F59E0B,#EF4444)">Y</div>
-                <div class="voice-inner">
-                  <div class="play-btn">▶</div>
-                  <div class="waveform">
-                    <div class="wave-bar played" style="height:6px"></div><div class="wave-bar played" style="height:10px"></div><div class="wave-bar played" style="height:7px"></div><div class="wave-bar played" style="height:12px"></div><div class="wave-bar played" style="height:5px"></div><div class="wave-bar played" style="height:9px"></div><div class="wave-bar played" style="height:11px"></div><div class="wave-bar" style="height:6px"></div><div class="wave-bar" style="height:8px"></div><div class="wave-bar" style="height:4px"></div>
-                  </div>
-                  <div class="voice-dur">0:07</div>
-                </div>
-              </div>
-            </div>
-          </div>
+    <section class="safety">
+      <div class="wrap safety-wrap">
+        <div class="safety-intro reveal"><p class="eyebrow" style="color:#fff"><span class="spark-mark">✦</span> Real-world safety</p><h2>Date smarter. Spark’s got your back.</h2><p>Set your plan before you go, choose when Spark checks in, and get help into motion if the night takes a turn.</p><div class="free-note">✓ Every safety feature is free for every member.</div></div>
+        <div class="safety-list">
+          <article class="safety-row reveal"><div class="safety-icon">◷</div><div><h3>Date check-in</h3><p>Log who, where, and when. Spark checks on you by notification at the time you choose.</p></div></article>
+          <article class="safety-row reveal"><div class="safety-icon">!</div><div><h3>“I’m safe” / “I need help”</h3><p>One-tap SOS can share your live location with a friend, with a Call 911 button ready.</p></div></article>
+          <article class="safety-row reveal"><div class="safety-icon">↗</div><div><h3>Share your date plan</h3><p>Send the details to a friend — even if they don’t use Spark.</p></div></article>
         </div>
-        <div class="phone-desc">Voice notes auto-translate in real time — connect with anyone, in any language</div>
       </div>
+    </section>
 
+    <section class="lounge" id="lounge">
+      <div class="wrap split">
+        <div class="split-copy reveal"><p class="eyebrow"><span class="spark-mark">✦</span> The Lava Lounge <span class="premium-tag">Premium</span></p><h2>Meet in the rooms before you match.</h2><p>Drop into a themed conversation, catch the vibe, then tap anyone to see their profile and like them in Spark.</p><div class="rooms"><span class="room">🌙 Friday Night Vibes</span><span class="room">🎵 Music & Moods</span><span class="room">✈️ Wanderlust</span><span class="room">🍜 Foodies Only</span><span class="room">💼 Ambitious Minds</span><span class="room">🏀 Sports Talk</span><span class="room">🕶️ Man Cave · men-only</span><span class="room">🌷 Safe Place · women-only</span></div><div class="pop-up"><strong>Event pop-up rooms</strong><span>Game nights, watch parties, and special rooms appear with a live countdown.</span></div></div>
+        <div class="photo-frame reveal"><img src="img/lava-lounge-glasses.webp" loading="lazy" decoding="async" alt="Meta smart glasses beside a phone showing Spark Lava Lounge chat rooms"></div>
+      </div>
+    </section>
+
+    <section class="final">
+      <div class="wrap"><div class="cta-band reveal"><h2>Ready to meet someone real?</h2><a class="button primary" href="https://smartsparks.app">Connect Spark free <span aria-hidden="true">→</span></a></div></div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="footer-top"><div class="footer-brand"><img src="img/spark-logo.webp" alt="Spark logo"><div><strong>Spark</strong><span>Built for Meta Ray-Ban Display glasses</span></div></div><div class="footer-links"><a href="https://smartsparks.app/terms">Terms</a><a href="https://smartsparks.app/privacy">Privacy</a><a href="https://smartsparks.app/contact">Contact</a></div></div>
+      <div class="footer-bottom"><span>support@smartsparks.app</span><span>© 2026 Smart Sparks LLC</span></div>
     </div>
-  </div>
-</div>
+  </footer>
 
-<hr class="divider">
-
-<!-- Install Section -->
-<div class="section" id="install">
-  <div class="section-inner">
-    <div class="install-section">
-      <div class="install-glow"></div>
-      <div class="install-grid">
-        <div>
-          <div class="eyebrow">Getting Started</div>
-          <h2 class="section-h">Not an app download.<br>A web app you connect.</h2>
-          <p class="section-p" style="margin-bottom:40px">Spark runs as a Web App directly on your Ray-Ban Display Glasses — added in seconds through the Meta AI app. No App Store. No download.</p>
-          <div class="install-steps">
-            <div class="install-step">
-              <div class="step-num">1</div>
-              <div>
-                <div class="step-title">Get the Meta AI App</div>
-                <div class="step-desc">Download <strong>Meta AI</strong> from the App Store or Google Play and sign in with your Meta account. Make sure your Ray-Ban Display Glasses are paired.</div>
-              </div>
-            </div>
-            <div class="install-step">
-              <div class="step-num">2</div>
-              <div>
-                <div class="step-title">Enable Developer Mode</div>
-                <div class="step-desc">In the Meta AI app go to <strong>Settings → App Info</strong>, then tap the version number <strong>five times</strong>. Tap <strong>Enable</strong> when prompted. This unlocks Web App support.</div>
-              </div>
-            </div>
-            <div class="install-step">
-              <div class="step-num">3</div>
-              <div>
-                <div class="step-title">Add Spark as a Web App</div>
-                <div class="step-desc">Go to <strong>App Settings → App Connections → Web Apps → Add a Web App</strong>. Enter <em>Spark</em> as the name and <strong>smartsparks.app</strong> as the URL. Tap <strong>Connect</strong>.</div>
-              </div>
-            </div>
-            <div class="install-step">
-              <div class="step-num">4</div>
-              <div>
-                <div class="step-title">Put on your glasses and launch</div>
-                <div class="step-desc">Spark appears in your glasses apps grid under <strong>Web Apps</strong>. Select it with the D-pad — messages, rooms, and translation appear right in your display.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div>
-          <div class="meta-phone">
-            <div class="meta-notch"><div class="meta-notch-pill"></div></div>
-            <div class="meta-status"><span>9:41</span><span>●●● 5G 🔋</span></div>
-            <div class="meta-topbar">
-              <div class="meta-back">‹</div>
-              <div class="meta-page-title">Apps</div>
-            </div>
-            <div class="meta-card">
-              <div class="meta-row"><div class="meta-row-icon" style="background:#2A5EC8">📧</div><div class="meta-row-body"><div class="meta-row-name">Outlook Email</div></div><div class="meta-row-chevron">›</div></div>
-              <div class="meta-row"><div class="meta-row-icon" style="background:#1565C0">👥</div><div class="meta-row-body"><div class="meta-row-name">Outlook People</div></div><div class="meta-row-chevron">›</div></div>
-              <div class="meta-row"><div class="meta-row-icon" style="background:#1A78F2">🎵</div><div class="meta-row-body"><div class="meta-row-name">Shazam</div></div><div class="meta-row-chevron">›</div></div>
-              <div class="meta-row"><div class="meta-row-icon" style="background:#1DB954">🎧</div><div class="meta-row-body"><div class="meta-row-name">Spotify</div></div><div class="meta-row-chevron">›</div></div>
-            </div>
-            <div class="meta-section-header">Web apps</div>
-            <div class="meta-card">
-              <div class="meta-row spark-row"><div class="meta-row-icon" style="background:linear-gradient(135deg,#E8409A,#7C3AED)">✦</div><div class="meta-row-body"><div class="meta-row-name">Sparks Dating</div><div class="meta-row-sub">https://smartsparks.app</div></div><div class="meta-row-chevron">›</div></div>
-              <div class="meta-row"><div class="meta-row-icon" style="background:#2A3550">🎮</div><div class="meta-row-body"><div class="meta-row-name">Chess</div><div class="meta-row-sub">chess-glasses.onrender.com</div></div><div class="meta-row-chevron">›</div></div>
-              <div class="meta-row"><div class="meta-row-icon" style="background:#C62828">▶</div><div class="meta-row-body"><div class="meta-row-name">Tube</div><div class="meta-row-sub">herald.ascents.gg/a/youtube</div></div><div class="meta-row-chevron">›</div></div>
-              <div class="meta-row"><div class="meta-row-icon" style="background:#2C2C2E;border:1px solid #444">🔗</div><div class="meta-row-body"><div class="meta-row-name" style="color:#E8409A">Connect a Web App</div></div><div class="meta-row-chevron">›</div></div>
-            </div>
-            <div style="padding:8px 14px 6px;font-size:6.5px;color:#48484A;text-align:center;line-height:1.5">Meta AI App · App Settings → App Connections → Web Apps</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<hr class="divider">
-
-<!-- Translation Feature -->
-<div class="section">
-  <div class="section-inner">
-    <div class="trans-section">
-      <div class="trans-glow-l"></div>
-      <div class="trans-glow-r"></div>
-      <div class="trans-section-inner">
-        <div>
-          <div class="eyebrow" style="color:#A78BFA">Translation</div>
-          <h2 class="section-h">Say it in your<br>language. They<br>hear theirs.</h2>
-          <p class="section-p">Send voice notes in any language and Spark auto-translates them for your match. No copy-pasting, no third-party apps. Real conversation, zero barriers.</p>
-          <div style="display:flex;flex-direction:column;gap:10px">
-            <div style="display:flex;align-items:center;gap:10px;font-size:0.88rem;color:var(--dim)"><span style="color:#A78BFA;font-size:1.2rem">🎙️</span> Send a voice note in any language</div>
-            <div style="display:flex;align-items:center;gap:10px;font-size:0.88rem;color:var(--dim)"><span style="color:#A78BFA;font-size:1.2rem">⚡</span> Auto-translated instantly, no setup needed</div>
-            <div style="display:flex;align-items:center;gap:10px;font-size:0.88rem;color:var(--dim)"><span style="color:#A78BFA;font-size:1.2rem">🌍</span> 50+ languages supported</div>
-            <div style="display:flex;align-items:center;gap:10px;font-size:0.88rem;color:var(--dim)"><span style="color:#A78BFA;font-size:1.2rem">🕶️</span> Plays through your Ray-Ban glasses speaker</div>
-          </div>
-        </div>
-        <div class="trans-visual">
-          <div class="trans-pair">
-            <div class="trans-pair-lang lang-pt">🇧🇷 Portuguese (Original)</div>
-            <div class="trans-pair-text">"Você é incrível, quero te conhecer melhor."</div>
-            <div class="trans-pair-sub">Voice note • 0:06</div>
-          </div>
-          <div class="trans-arrow">↓ Spark translates instantly</div>
-          <div class="trans-pair" style="border-color:rgba(74,222,128,0.25);background:rgba(74,222,128,0.05)">
-            <div class="trans-pair-lang lang-en">🇺🇸 English (Delivered)</div>
-            <div class="trans-pair-text">"You're incredible, I want to get to know you better."</div>
-            <div class="trans-pair-sub">Auto-translated by Spark</div>
-          </div>
-          <div class="trans-arrow">↕ Works in both directions</div>
-          <div class="trans-pair" style="border-color:rgba(251,191,36,0.25);background:rgba(251,191,36,0.04)">
-            <div class="trans-pair-lang lang-es">🇪🇸 Spanish (Original)</div>
-            <div class="trans-pair-text">"¿Cuándo podemos salir a tomar café?"</div>
-            <div class="trans-pair-sub">Voice note • 0:05</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<hr class="divider">
-
-<!-- Features -->
-<div class="section" id="features">
-  <div class="section-inner">
-    <div class="eyebrow">Features</div>
-    <h2 class="section-h">Built for real connection.</h2>
-    <p class="section-p">No infinite scrolling. No algorithmic bait. Just features that get you closer to someone worth meeting.</p>
-    <div class="feat-grid">
-      <div class="feat-card"><span class="feat-icon">🔥</span><div class="feat-name">Fire or Ice</div><div class="feat-desc">Quick-vote on profiles that have already shown interest. Once rated, they never re-appear — no awkward loops.</div></div>
-      <div class="feat-card"><span class="feat-icon">📍</span><div class="feat-name">Nearby</div><div class="feat-desc">See who's actually around you right now with a live profile cache. No waiting, no stale results.</div></div>
-      <div class="feat-card"><span class="feat-icon">⚡</span><div class="feat-name">Spark Score</div><div class="feat-desc">A real compatibility signal built from your activity and preferences — not just appearance.</div></div>
-      <div class="feat-card"><span class="feat-icon">⌨️</span><div class="feat-name">SparkVK Keyboard</div><div class="feat-desc">A voice-first virtual keyboard designed for glasses D-pad navigation. Type with voice, emoji, or smart phrase suggestions.</div></div>
-      <div class="feat-card"><span class="feat-icon">🌋</span><div class="feat-name">Lava Lounge</div><div class="feat-desc">8 live group chat rooms for deeper connection — themed, moderated, and built for real conversation.</div></div>
-      <div class="feat-card"><span class="feat-icon">✓</span><div class="feat-name">Verified Profiles</div><div class="feat-desc">Every verified user is clearly marked. You always know you're talking to a real person.</div></div>
-    </div>
-  </div>
-</div>
-
-<hr class="divider">
-
-<!-- Glasses -->
-<div class="section">
-  <div class="section-inner">
-    <div class="glasses-section">
-      <div class="glasses-glow"></div>
-      <div>
-        <div class="eyebrow" style="color:#C084FC">Glasses-First</div>
-        <h2 class="section-h">Designed for the Meta Ray-Ban Display</h2>
-        <p class="section-p" style="margin-bottom:24px">Every tap, every scroll, every message — built for D-pad navigation and the glasses display. Spark is the first dating app that actually works on your face.</p>
-        <div class="glasses-pills">
-          <span class="gpill">D-pad navigation</span>
-          <span class="gpill">SparkVK keyboard</span>
-          <span class="gpill">Voice input</span>
-          <span class="gpill">Hands-free</span>
-          <span class="gpill">No hover-only UI</span>
-          <span class="gpill">Glasses HUD overlay</span>
-        </div>
-      </div>
-      <div class="glasses-visual-area">
-        <div class="glasses-frame">🕶️</div>
-        <div class="hud-box">
-          <div class="hud-label"><span class="hud-dot"></span> Spark — Live in Glasses</div>
-          <div class="hud-msg"><span class="sender">Aaliyah M.</span> <span class="txt">loved the playlist 🔥</span></div>
-          <div class="hud-msg" style="margin-top:5px"><span class="sender">Friday Night Vibes</span> <span class="txt">47 online right now</span></div>
-          <div style="display:flex;gap:8px;margin-top:8px">
-            <span style="background:var(--pink);color:#fff;border-radius:6px;padding:3px 10px;font-size:0.7rem;font-weight:600">Reply</span>
-            <span style="background:rgba(255,255,255,0.1);color:var(--dim);border-radius:6px;padding:3px 10px;font-size:0.7rem">Join Room</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<hr class="divider">
-
-<!-- Lava Lounge -->
-<div class="section" id="lounge">
-  <div class="section-inner">
-    <div class="lounge-section">
-      <div style="font-size:2.8rem;margin-bottom:16px">🌋</div>
-      <h2 class="lounge-title">Spark Lava Lounge</h2>
-      <p class="lounge-sub">Premium group chat rooms — meet people organically across 8 curated spaces. No one-on-one pressure.</p>
-      <div class="room-chips">
-        <span class="room-chip">🎉 Friday Night Vibes</span>
-        <span class="room-chip">🎵 Music &amp; Moods</span>
-        <span class="room-chip">✈️ Wanderlust</span>
-        <span class="room-chip">🍽️ Foodies Only</span>
-        <span class="room-chip">💡 Ambitious Minds</span>
-        <span class="room-chip">🏠 Man Cave<span class="restricted">Men only</span></span>
-        <span class="room-chip">🌸 Safe Place<span class="restricted">Women only</span></span>
-        <span class="room-chip">🏆 Sports Talk</span>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- CTA -->
-<div class="cta-section">
-  <div class="cta-glow"></div>
-  <div style="position:relative;z-index:1">
-    <h2 class="cta-title">Your next <span class="grad">spark</span><br>is waiting.</h2>
-    <p class="cta-sub">No download required. Just the Meta AI app and your Ray-Ban glasses.</p>
-    <a href="https://smartsparks.app" class="btn-p" style="font-size:1.05rem;padding:15px 38px">Get Spark via Meta AI →</a>
-  </div>
-</div>
-
-<!-- Footer -->
-<footer>
-  <div class="footer-inner">
-    <a href="https://smartsparks.app" class="footer-logo">✦ <span>Spark</span></a>
-    <div class="footer-links">
-      <a href="https://smartsparks.app">Open App</a>
-      <a href="https://rooms.smartsparks.app">Lava Lounge</a>
-    </div>
-    <div class="footer-copy">© 2026 Spark · Built for Meta Ray-Ban Display Glasses</div>
-  </div>
-</footer>
-
+  <script>
+    (function () {
+      var items = document.querySelectorAll('.reveal');
+      if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        items.forEach(function (item) { item.classList.add('in'); }); return;
+      }
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) { if (entry.isIntersecting) { entry.target.classList.add('in'); observer.unobserve(entry.target); } });
+      }, { threshold: 0.12 });
+      items.forEach(function (item) { observer.observe(item); });
+    }());
+  </script>
 </body>
 </html>
