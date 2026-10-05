@@ -218,6 +218,13 @@
       .reveal { opacity:1; transform:none; }
     }
   
+    /* Oct 4: links to the member How-to guide */
+    .guide-link { margin:18px 0 0; font-weight:650; font-size:.95rem; }
+    .guide-link a { color:var(--muted); text-decoration:none; border-bottom:1px solid var(--line); }
+    .guide-link a:hover, .guide-link a:focus-visible { color:var(--ink); border-color:var(--pink); }
+    .setup .guide-link a { color:#d5dbef; }
+    .hero-copy > p.guide-link { font-size:.95rem; margin:20px 0 0; color:inherit; }
+    .setup-guide { grid-column:1/-1; margin:4px 0 0 18px; }
     /* keep decorative glows from causing sideways scroll on phones (clip keeps the sticky nav working) */
     html, body { overflow-x: clip; }
   </style>
@@ -227,7 +234,7 @@
     <nav class="wrap" aria-label="Primary navigation">
       <a class="brand" href="#top" aria-label="Spark home"><img src="img/spark-logo.webp" alt="Spark logo"><span>Spark</span></a>
       <div class="nav-links">
-        <a href="#features">Features</a><a href="#glasses">Glasses</a><a href="#translation">Translation</a><a href="#lounge">Lounge</a>
+        <a href="#features">Features</a><a href="#glasses">Glasses</a><a href="#translation">Translation</a><a href="#lounge">Lounge</a><a href="/how-to">How to</a>
         <a class="button primary nav-cta" href="https://smartsparks.app">Try Spark free</a>
       </div>
     </nav>
@@ -241,6 +248,7 @@
           <h1>The dating app built <em>for your face.</em></h1>
           <p>Chat, flirt, and meet — right in your Meta Ray-Ban Display glasses. No App Store. No download.</p>
           <div class="cta-row"><a class="button primary" href="https://smartsparks.app">Connect Spark <span aria-hidden="true">→</span></a><a class="button secondary" href="#glasses">How it works</a></div>
+          <p class="guide-link"><a href="/how-to">📖 New here? Read the step-by-step member guide →</a></p>
         </div>
         <div class="hero-visual reveal">
           <img src="img/hero-couple-glasses.webp" alt="A stylish couple wearing smart glasses in an evening city setting">
@@ -262,6 +270,7 @@
             <div class="step"><div class="num">02</div><div><h3>Enable Developer Mode</h3><p>Open up Web Apps for your display.</p></div></div>
             <div class="step"><div class="num">03</div><div><h3>Add Spark</h3><p>Use smartsparks.app as your Web App.</p></div></div>
             <div class="step"><div class="num">04</div><div><h3>Launch from your glasses</h3><p>Your dating life is now hands-free.</p></div></div>
+            <p class="guide-link setup-guide"><a href="/how-to#glasses">Full glasses setup guide, with the Glasses Code and PIN →</a></p>
           </div>
         </div>
       </div>
@@ -321,7 +330,7 @@
 
   <footer>
     <div class="wrap">
-      <div class="footer-top"><div class="footer-brand"><img src="img/spark-logo.webp" alt="Spark logo"><div><strong>Spark</strong><span>Built for Meta Ray-Ban Display glasses</span></div></div><div class="footer-links"><a href="https://smartsparks.app/terms">Terms</a><a href="https://smartsparks.app/privacy">Privacy</a><a href="https://smartsparks.app/contact">Contact</a></div></div>
+      <div class="footer-top"><div class="footer-brand"><img src="img/spark-logo.webp" alt="Spark logo"><div><strong>Spark</strong><span>Built for Meta Ray-Ban Display glasses</span></div></div><div class="footer-links"><a href="/how-to">How to use Spark</a><a href="https://smartsparks.app/terms">Terms</a><a href="https://smartsparks.app/privacy">Privacy</a><a href="https://smartsparks.app/contact">Contact</a></div></div>
       <div class="footer-bottom"><span>support@smartsparks.app</span><span>© 2026 Smart Sparks LLC</span></div>
     </div>
   </footer>
