@@ -228,6 +228,48 @@
     .setup-guide { grid-column:1/-1; margin:4px 0 0 18px; }
     /* keep decorative glows from causing sideways scroll on phones (clip keeps the sticky nav working) */
     html, body { overflow-x: clip; }
+  
+    /* FAQ section (added Oct 17, 2026) */
+      .faq { padding-top: 32px; }
+      .faq-head { max-width: 720px; margin-bottom: 40px; }
+      .faq-head h2 { font-size: clamp(2.55rem, 5vw, 5rem); }
+      .faq-head p { color: var(--muted); font-size: 1.08rem; margin: 18px 0 0; }
+      .faq-list { display: grid; gap: 12px; max-width: 860px; }
+      .faq-item {
+        border: 1px solid var(--line);
+        background: var(--surface);
+        border-radius: var(--radius-md);
+        padding: 0 24px;
+      }
+      .faq-item summary {
+        cursor: pointer;
+        list-style: none;
+        display: flex; justify-content: space-between; align-items: center; gap: 16px;
+        padding: 20px 0;
+        font-family: Manrope, sans-serif; font-weight: 700; font-size: 1.08rem; letter-spacing: -.02em;
+      }
+      .faq-item summary::-webkit-details-marker { display: none; }
+      .faq-item summary::after {
+        content: "+"; flex: none;
+        width: 32px; height: 32px; border-radius: 50%;
+        display: grid; place-items: center;
+        background: var(--pink-soft); color: var(--pink-hot); font-size: 1.25rem; font-weight: 800;
+      }
+      .faq-item[open ] summary::after { content: "–"; }
+      .faq-item summary:hover, .faq-item summary:focus-visible { color: var(--pink-hot); }
+      .faq-item .faq-a { padding: 0 0 22px; color: var(--muted); }
+      .faq-item .faq-a p { margin: 0 0 10px; }
+      .faq-item .faq-a p:last-child { margin-bottom: 0; }
+      .faq-item .faq-a strong { color: var(--ink); }
+      .faq-item .faq-a ol { margin: 0 0 10px; padding-left: 20px; }
+      .faq-item .faq-a li { margin-bottom: 4px; }
+      .faq-more { margin: 28px 0 0; font-weight: 650; font-size: .95rem; }
+      .faq-more a { color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--line); }
+      .faq-more a:hover, .faq-more a:focus-visible { color: var(--ink); border-color: var(--pink); }
+      @media (max-width: 580px) {
+        .faq-item { padding: 0 18px; }
+        .faq-item summary { font-size: 1rem; padding: 17px 0; }
+      }
   </style>
 </head>
 <body>
@@ -235,7 +277,7 @@
     <nav class="wrap" aria-label="Primary navigation">
       <a class="brand" href="#top" aria-label="Spark home"><img src="img/spark-logo.webp" alt="Spark logo"><span>Spark</span></a>
       <div class="nav-links">
-        <a href="#features">Features</a><a href="#glasses">Glasses</a><a href="#translation">Translation</a><a href="#lounge">Lounge</a><a href="/how-to">How to</a>
+        <a href="#features">Features</a><a href="#glasses">Glasses</a><a href="#translation">Translation</a><a href="#lounge">Lounge</a><a href="#faq">FAQ</a><a href="/how-to">How to</a>
         <a class="button primary nav-cta" href="https://smartsparks.app">Try Spark free</a>
       </div>
     </nav>
@@ -325,6 +367,69 @@
         <div class="photo-frame reveal"><img src="img/lounge-raybans.webp" loading="lazy" decoding="async" alt="Ray-Ban Display glasses showing a Spark notification in the lens, beside a phone showing Lava Lounge chat rooms"></div>
       </div>
     </section>
+
+    <section class="faq" id="faq">
+  <div class="wrap">
+    <div class="faq-head reveal">
+      <p class="eyebrow"><span class="spark-mark">✦</span> Questions, answered</p>
+      <h2>Before you connect.</h2>
+      <p>The six things everyone asks first — straight answers, no fine print.</p>
+    </div>
+
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>How do I get Spark? I can't find it in the App Store.</summary>
+        <div class="faq-a">
+          <p>You don't download Spark — <strong>it's a web app you connect</strong>, so there's no App Store or Google Play listing.</p>
+          <ol>
+            <li><strong>Set up on your phone first</strong> — go to smartsparks.app, sign up, and create your profile.</li>
+            <li><strong>Connect it to your glasses</strong> — in the Meta AI app, go to Developer Mode → Web Apps → Add “Spark”.</li>
+            <li><strong>Unlock on your glasses</strong> — enter your Glasses Code, then your PIN.</li>
+          </ol>
+          <p>On your phone, you can also add Spark to your Home Screen from your browser and use it like an app.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Do I need the glasses to use Spark?</summary>
+        <div class="faq-a">
+          <p><strong>No.</strong> Spark works on your phone's browser on its own — join, match, and chat from your phone. The Meta Ray-Ban Display glasses add the hands-free experience: profiles and messages right in your lens, speak-to-type, and messages read aloud. Same account, same conversations, on both.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>How much does Spark cost?</summary>
+        <div class="faq-a">
+          <p><strong>Spark itself is free</strong> — Discover, matching, and messaging, with 8 likes and 1 Super Like a day.</p>
+          <p><strong>Spark Premium is $9.99/month</strong> and covers both the app and the Lava Lounge: unlimited likes, 6 profile photos, see who liked and viewed you, translation in the user's preferred language, and full Lounge access. Cancel any time through Stripe, in Profile → Manage Subscription.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>What is Founder's Access?</summary>
+        <div class="faq-a">
+          <p>New members get <strong>30 days of Premium free</strong> — that's Founder's Access. Everything Premium includes, free for your first 30 days. When it ends, Spark stays free; the Premium features simply lock unless you subscribe. Your Profile shows your Founder's Access countdown.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Is date check-in and safety really free?</summary>
+        <div class="faq-a">
+          <p><strong>Yes — every safety feature is free for every member.</strong> Before a date, log who you're meeting, where, and when. Spark checks in on you at the time you choose; tap “I'm safe,” or “I need help” to send your live location to a friend in one tap, with a Call 911 option. You can also share your date plan with a friend who doesn't use Spark. Date safe. It's free.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>What is the Lava Lounge?</summary>
+        <div class="faq-a">
+          <p>The Lava Lounge is Spark's live group chat — <strong>8 themed rooms</strong> (Friday Night Vibes, Music &amp; Moods, Wanderlust, Foodies Only, Ambitious Minds, Sports Talk, a men-only Man Cave, and a women-only Safe Place), plus event pop-up rooms, trivia nights, and games. Get to know people's personalities first, then tap anyone to see their profile and like them in Spark. The Lounge is part of Premium — and it's included in your 30 days of Founder's Access.</p>
+        </div>
+      </details>
+    </div>
+
+    <p class="faq-more">More questions? <a href="/how-to#help">Read the full member guide &amp; FAQ →</a> &nbsp;·&nbsp; Still stuck? <a href="mailto:support@smartsparks.app">support@smartsparks.app</a></p>
+  </div>
+</section>
 
     <section class="final">
       <div class="wrap"><div class="cta-band reveal"><h2>Ready to meet someone real?</h2><a class="button primary" href="https://smartsparks.app">Connect Spark free <span aria-hidden="true">→</span></a></div></div>
