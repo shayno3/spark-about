@@ -270,6 +270,19 @@
         .faq-item { padding: 0 18px; }
         .faq-item summary { font-size: 1rem; padding: 17px 0; }
       }
+  
+    /* Two-hub strip (added Oct 17, 2026) */
+    .hubs { padding: 8px 0 40px; }
+    .hubs-band { border: 1px solid var(--line); background: var(--surface); border-radius: var(--radius-lg); padding: clamp(30px, 4vw, 44px); text-align: center; }
+    .hubs-band .eyebrow { justify-content: center; margin-bottom: 12px; }
+    .hubs-band h2 { font-size: clamp(1.7rem, 3vw, 2.4rem); }
+    .hubs-copy { color: var(--muted); margin: 12px auto 0; max-width: 520px; }
+    .hubs-links { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 24px; }
+    .hub-link { display: inline-flex; flex-direction: column; align-items: flex-start; gap: 1px; padding: 13px 20px; border: 1px solid var(--line); border-radius: 18px; background: var(--bg-2); text-decoration: none; text-align: left; transition: transform .2s ease, border-color .2s ease; }
+    .hub-link:hover, .hub-link:focus-visible { transform: translateY(-2px); border-color: var(--pink); }
+    .hub-link strong { font-family: Manrope, sans-serif; font-size: 1.02rem; letter-spacing: -.02em; }
+    .hub-link strong span { color: var(--pink-hot); }
+    .hub-link small { color: var(--muted); font-size: .85rem; }
   </style>
 </head>
 <body>
@@ -430,6 +443,20 @@
     <p class="faq-more">More questions? <a href="/how-to#help">Read the full member guide &amp; FAQ →</a> &nbsp;·&nbsp; Still stuck? <a href="mailto:support@smartsparks.app">support@smartsparks.app</a></p>
   </div>
 </section>
+
+    <section class="hubs" id="hubs">
+      <div class="wrap">
+        <div class="hubs-band reveal">
+          <p class="eyebrow"><span class="spark-mark">✦</span> Find Spark on</p>
+          <h2>Listed in both Ray-Ban Display web-app hubs.</h2>
+          <p class="hubs-copy">However you browse for glasses web apps, you'll find Spark there too.</p>
+          <div class="hubs-links">
+            <a class="hub-link" href="https://metaglassapps.com/app/spark-dating-for-ray-ban-display" target="_blank" rel="noopener"><strong>MetaGlassApps <span aria-hidden="true">→</span></strong><small>metaglassapps.com — Spark's full listing</small></a>
+            <a class="hub-link" href="https://herald.ascents.gg/hub?cat=Social" target="_blank" rel="noopener"><strong>Herald App Hub <span aria-hidden="true">→</span></strong><small>herald.ascents.gg — find Spark under Social</small></a>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <section class="final">
       <div class="wrap"><div class="cta-band reveal"><h2>Ready to meet someone real?</h2><a class="button primary" href="https://smartsparks.app">Connect Spark free <span aria-hidden="true">→</span></a></div></div>
